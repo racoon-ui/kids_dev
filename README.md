@@ -33,5 +33,23 @@
     "printWidth": 120
   }
   ```
+  - [ ] `ESLint` 와 `Prettier` 설정간의 충돌을 없애기 위해 `$ yarn add eslint-config-prettier` 를 설치하고 `package.json` 내의 `eslintConfig` 설정을 수정한다.
+  ```json
+  "eslintConfig": {
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "rules": {
+      "react/jsx-filename-extension": 0,
+      "react/jsx-one-expression-per-line": 0,
+      "react/prefer-stateless-function": 0
+    }
+  },
+  ```
 
 ### 02-create-react-app-typescript
+
+- [ ] `$ npx create-react-app 02-create-react-app-with-typescript --template typescript`
+  - [ ] `Code formatter` 설치는 `01-create-react-app` 프로젝트와 동일
+  - [ ] `useState Hook` 을 이용한 `counter` 구현
