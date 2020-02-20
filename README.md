@@ -1,4 +1,4 @@
-# React essential training for Kids dev
+# 유초등 개발팀 프론트엔드 training project
 
 이 프로젝트 저장소는 리액트 개발에 대한 training 을 목적으로 생성 되었습니다. 여기에서 작성된 코드들은 production 에 적용하기에 적합하지 않을 수 있습니다.
 
