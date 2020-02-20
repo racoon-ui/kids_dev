@@ -4,11 +4,11 @@
 
 ### 01-create-react-app
 
-- [ ] create react app 프로젝트 생성
-  - [ ] `$ npx create-react-app 01-create-react-app`
-  - [ ] `ESLint` 와 `Prettier` VSCode 확장 설치
-  - [ ] `$ yarn add eslint-config-airbnb`
-  - [ ] `package.json` 내의 `eslintConfig` 설정을 아래와 같이 변경
+- [x] create react app 프로젝트 생성
+  - [x] `$ npx create-react-app 01-create-react-app`
+  - [x] `ESLint` 와 `Prettier` VSCode 확장 설치
+  - [x] `$ yarn add eslint-config-airbnb`
+  - [x] `package.json` 내의 `eslintConfig` 설정을 아래와 같이 변경
   ```json
   "eslintConfig": {
     "extends": [
@@ -22,7 +22,7 @@
     }
   },
   ```
-  - [ ] `.prettierrc` 파일을 생성하고 아래와 같이 변경
+  - [x] `.prettierrc` 파일을 생성하고 아래와 같이 변경
   ```json
   {
     "singleQuote": true,
@@ -33,7 +33,7 @@
     "printWidth": 120
   }
   ```
-  - [ ] `ESLint` 와 `Prettier` 설정간의 충돌을 없애기 위해 `$ yarn add eslint-config-prettier` 를 설치하고 `package.json` 내의 `eslintConfig` 설정을 수정한다.
+  - [x] `ESLint` 와 `Prettier` 설정간의 충돌을 없애기 위해 `$ yarn add eslint-config-prettier` 를 설치하고 `package.json` 내의 `eslintConfig` 설정을 수정한다.
   ```json
   "eslintConfig": {
     "extends": [
@@ -47,9 +47,10 @@
     }
   },
   ```
+  - [x] `Component` 방식으로 `counter` 구현
 
 ### 02-create-react-app-typescript
 
-- [ ] `$ npx create-react-app 02-create-react-app-with-typescript --template typescript`
-  - [ ] `Code formatter` 설치는 `01-create-react-app` 프로젝트와 동일
-  - [ ] `useState Hook` 을 이용한 `counter` 구현
+- [x] `$ npx create-react-app 02-create-react-app-with-typescript --template typescript`
+  - [x] `Code formatter` 설치는 `01-create-react-app` 프로젝트와 동일
+  - [x] `useState Hook` 을 이용한 `counter` 구현
