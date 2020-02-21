@@ -4,6 +4,8 @@
 
 ### 01-create-react-app
 
+`$ npx create-react-app` 형태의 기본 프로젝트 생성을 통해 `React` 기본 template 을 살펴보고, `ESLint` 와 `Prettier` 의 조합으로 코드 규칙을 맞춰가는 방법을 알아가기 위한 프로젝트 입니다.
+
 - [x] create react app 프로젝트 생성
   - [x] `$ npx create-react-app 01-create-react-app`
   - [x] `ESLint` 와 `Prettier` VSCode 확장 설치
@@ -48,9 +50,3 @@
   },
   ```
   - [x] `Component` 방식으로 `counter` 구현
-
-### 02-create-react-app-typescript
-
-- [x] `$ npx create-react-app 02-create-react-app-with-typescript --template typescript`
-  - [x] `Code formatter` 설치는 `01-create-react-app` 프로젝트와 동일
-  - [x] `useState Hook` 을 이용한 `counter` 구현
