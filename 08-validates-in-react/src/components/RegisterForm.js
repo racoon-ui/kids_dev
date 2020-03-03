@@ -20,6 +20,7 @@ function RegisterForm({ onRegister }) {
   };
 
   const onSubmit = e => {
+    // const onSubmit = async e => {
     e.preventDefault();
 
     /**
@@ -29,8 +30,16 @@ function RegisterForm({ onRegister }) {
      * 2. email validates 확인
      * 3. password 규칙
      * 4. password & password_confirmation 과의 일치 확인
+     * 5. 동기 / 비동기 호출의 차이 확인
      */
 
+    // try {
+    //   const data = await RegisterFormValidator.validate(form);
+    //   onRegister(data);
+    // } catch (e) {
+    //   console.log(e);
+    // }
+    //
     RegisterFormValidator.validate(form)
       .then(form => {
         onRegister(form);
