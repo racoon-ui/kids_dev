@@ -13,7 +13,7 @@ const Post = ({ post }) => {
 const Profile = ({ profile }) => {
   return (
     <div className="profile-container">
-      <div className="profile-name">{profile.name}</div>
+      <div className="profile-name">{profile}</div>
     </div>
   );
 };
@@ -35,7 +35,7 @@ const Profile = ({ profile }) => {
 function App() {
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState('profile');
 
   /**
    * 0. library 로써의 차이점을 알아보자 (브라우저 지원, 3rd party library 사용 등)
@@ -48,23 +48,26 @@ function App() {
    */
 
   useEffect(() => {
-    // fetch('/posts')
-    //   .then(res => {
-    //     if (!res.ok) {
-    //       throw Error(res.statusText);
-    //     }
-    //     return res.json();
-    //   })
-    //   .then(json => {
-    //     setPosts(...posts, json);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    console.log('useEffect ENTRY');
+
+    fetch('/posts')
+      .then(res => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(json => {
+        setPosts(json);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     //
     // axios('/posts')
     //   .then(res => {
-    //     return setPosts(...posts, res.data);
+    //     return setPosts(res.data);
     //   })
     //   .catch(error => {
     //     console.log(error);
@@ -83,16 +86,16 @@ function App() {
     //   }
     // }
     //
-    const fetchPost = async () => {
-      try {
-        const res = await axios('/posts');
-        setPosts(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
+    // const fetchPost = async () => {
+    //   try {
+    //     const res = await axios('/posts');
+    //     setPosts(res.data);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // };
 
-    fetchPost();
+    // fetchPost();
   }, []);
 
   return (
@@ -102,6 +105,9 @@ function App() {
         {posts.length === 0 && <div className="empty-data">데이터가 없습니다.</div>}
       </div>
       {profile && <Profile profile={profile} />}
+      <button type="button" onClick={() => setProfile('dante')}>
+        Change DANTE
+      </button>
     </div>
   );
 }
