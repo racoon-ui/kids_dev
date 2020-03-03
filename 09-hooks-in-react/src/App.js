@@ -78,10 +78,6 @@ function App() {
     fetchPost();
   }, [profile]);
 
-  const onChangeProfile = e => {
-    setProfile(e.target.value);
-  };
-
   const changeProfileHandler = () => {
     setProfile(profileEl.current.value);
   };
@@ -93,7 +89,6 @@ function App() {
         {posts.length === 0 && <div className="empty-data">데이터가 없습니다.</div>}
       </div>
       {profile && <Profile profile={profile} />}
-      {/* <input type="text" name="profile" onChange={onChangeProfile} /> */}
       <input type="text" name="profile" ref={profileEl} />
       <button type="button" onClick={changeProfileHandler}>
         Change
