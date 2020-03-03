@@ -1,0 +1,43 @@
+.form-container {
+  margin: 0 auto;
+  width: 400px;
+  padding-top: 4rem;
+}
+
+.form-container h1 {
+  text-align: center;
+}
+
+.form-container input {
+  font-size: small;
+  padding: 12px 16px;
+  text-shadow: 0 1px 1px #fff;
+}
+
+.form-container .control-label {
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.form-container .form-group {
+  margin-bottom: 1.4rem;
+}
+
+.form-container .form-control {
+  width: 100%;
+}
+
+.form-container .btn {
+  display: inline-block;
+  border-radius: 2px;
+  padding: 15px 24px;
+  transition: all 0.1s;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-container .btn:hover {
+  color: white;
+  background-color: #dd4b39;
+}
