@@ -1,155 +1,47 @@
-# 03 React 프로젝트 내에서 stylesheet 사용
+# 08 React 프로젝트 내에서 validates 사용
 
-이 프로젝트에서는 React 프로젝트로 개발을 진행할 때 사용할 수 있는 stylesheet 기법에 대해서 알아보고자 합니다.
+이 프로젝트에서는 React 프로젝트로 개발을 진행할 때 사용할 수 있는 validates check 기법에 대해서 소개하고자 합니다.
 
-### 공통 컴포넌트 생성
+### yup 소개
 
-동일한 화면에 대해서 `css`, `scss`, `css module`, `CSS-in-JS` 기법을 알아보기 위해 회원가입 컴포넌트를 `components` 폴더 하위에 만듭니다.
-그리고, `containers` 폴더 내에서는 `css`, `scss`, `css module`, `emotion` 별로 폴더를 만든 위 각 기법에 대한 코드를 작성합니다.
-
-- [x] 회원가입 컴포넌트 생성
-  - [x] `components` 폴더 내에 `RegisterForm.js` 파일을 생성하고 회원가입 화면 제작
-
-### CSS 컨테이너 생성
-
-제작된 화면가입 컴포넌트를 `css` 기법으로 스타일을 적용하기 위해 `containers` 폴더 내에 `css` 폴더를 제작하고 `index.js`, `style.css` 파일을 생성하여 각각 내용을 작성합니다.
+React 에서 회원가입 / 로그인 등의 과정을 진행한다고 생각하면, 각 입력 항목들에 대해 정상적으로 입력을 했는지에 대해 validates check 를 할 필요가 있습니다. 또한, 이러한 사용자의 입력에 따라 적절한 오류 메시지를 출력하는 것도 사용자 경험에서는 중요합니다.
+사용자가 Form 을 Submit 하려고 할 때 아래와 같이 각 입력 항목에 대해 세부적으로 점검을 하는 것도 방법입니다.
 
 ```javascript
-// index.js
+if (password !== password_confirmation) {
+  alert('비밀번호와 비밀번호 확인이 일치하지 않습니다');
+  return;
+}
 
-import React from 'react';
-import RegisterForm from '../../components/RegisterForm';
-import './style.css';
+if (username.length === 0) {
+  alert('사용자명을 입력해 주세요');
+  return
+}
 
-export default ({ onRegister }) => {
-  return <RegisterForm onRegister={onRegister} />;
-};
+...
 ```
 
-```css
-.form-container {
-  margin: 0 auto;
-  width: 400px;
-  padding-top: 4rem;
-}
+위와 같이 코드를 작성하게 되면 상당히 많은 항목에 대해 validate check 를 수행해야 하며, 또한 하나의 항목에 대해서도 다양한 validate check 가 필요할 경우 그 경우의 수는 갑작스럽게 증가하게 됩니다. 예를 들어, 사용자명에 대한 입력 규칙을 정한다고 생각해 봅시다. 사용자명에 대한 규칙은 다음과 같이 다양할 수 있습니다.
 
-.form-container h1 {
-  text-align: center;
-}
-
-.form-container input {
-  font-size: small;
-  padding: 12px 16px;
-  text-shadow: 0 1px 1px #fff;
-}
-
-.form-container .control-label {
-  display: inline-block;
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-
-.form-container .form-group {
-  margin-bottom: 1.4rem;
-}
-
-.form-container .form-control {
-  width: 100%;
-}
-
-.form-container .btn {
-  display: inline-block;
-  border-radius: 2px;
-  padding: 15px 24px;
-  transition: all 0.1s;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.form-container .btn:hover {
-  color: white;
-  background-color: #dd4b39;
-}
+```
+1. 사용자명은 반드시 입력되어야 한다.
+2. 사용자명은 반드시 영문자 또는 숫자로만 이루어져야 한다.
+3. 사용자명은 최소 3자 이상 최대 16자 이하로 이루어져야 한다.
+...
 ```
 
-### SCSS 컨테이너 생성
+사용자명만 해도 위와 같은 rule 들이 존재할 수 있으며, 위의 rule 보다 훨씬 복잡한 케이스가 등장할 수도 있습니다. 이런 다양한 경우의 validates 를 check 하기 위한 용도로 [yup](https://github.com/jquense/yup), [joi](https://hapi.dev/family/joi/), [validates.js](https://github.com/ansman/validate.js) 등이 있을 수 있습니다만, 아래의 이미지에서 보는 바와 같이 Client Side 기술에서는 [yup](https://github.com/jquense/yup) 이 많이 사용되고 있습니다.
 
-`scss` 를 적용하기 위해 `containers` 폴더 내에 `scss` 폴더를 만든 뒤 `index.js` 와 `style.scss` 파일을 만듭니다. `scss` 를 이용하기 위해서는 `node-sass` 패키지가 설치되어야 합니다.
+![](https://st-kr-tutor.s3-ap-northeast-2.amazonaws.com/got/fb60ff497b10934fee0589108d271da7/validates.png)
 
-- [ ] `$ yarn add node-sass`
+따라서 여기에서는 [yup](https://github.com/jquense/yup) 을 react 에서 어떻게 사용할 것인가? 에 대해 알아보고자 합니다.
+
+### Form 구문 생성
+
+회원가입을 위해 다음과 같이 RegisterForm Component 를 만들었다고 가정합니다.
 
 ```javascript
-//index.js
-
-import React from 'react';
-import RegisterForm from '../../components/RegisterForm';
-import './style.scss';
-
-export default ({ onRegister }) => {
-  return <RegisterForm onRegister={onRegister} />;
-};
-```
-
-```scss
-$white: #fff;
-$primary-color: #dd4b39;
-
-.form-container {
-  margin: 0 auto;
-  width: 400px;
-  padding-top: 4rem;
-
-  h1 {
-    text-align: center;
-  }
-
-  input {
-    font-size: small;
-    padding: 12px 16px;
-    text-shadow: 0 1px 1px $white;
-  }
-
-  .control-label {
-    display: inline-block;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
-
-  .form-group {
-    margin-bottom: 1.4rem;
-  }
-
-  .form-control {
-    width: 100%;
-  }
-
-  .btn {
-    display: inline-block;
-    border-radius: 2px;
-    padding: 15px 24px;
-    transition: all 0.1s;
-    text-decoration: none;
-    cursor: pointer;
-
-    &:hover {
-      color: white;
-      background-color: $primary-color;
-    }
-  }
-}
-```
-
-### CSS Module 컨테이너 생성
-
-`css module` 을 적용해 보기 위해 `containers` 폴더 내에 `module` 폴더를 만들고 `index.js`, `style.module.css` 파일을 만듭니다. `css module` 을 이용하기 위해서는 반드시 `[파일명].module.css` 형태로 파일명이 작성되어야 합니다.
-
-또한, `css module` 은 `className` 에 문자열의 style 을 적용하는 것이 아니라, `className={styles.wrapper}` 형태로 스타일을 지정하기 때문에 기존 회원가입 컴포넌트를 그대로 복사하되 `className` 내부를 모두 `styles.[style 명]` 형태로 재지정을 합니다.
-
-```javascript
-// index.js
-
 import React, { useState } from 'react';
-import styles from './style.module.css';
 
 function RegisterForm({ onRegister }) {
   const [form, setForm] = useState({
@@ -171,6 +63,7 @@ function RegisterForm({ onRegister }) {
 
   const onSubmit = e => {
     e.preventDefault();
+
     /**
      * 각종 validates 체크를 진행한 뒤 문제가 없다면 onRegister 이벤트를 호출합니다.
      * validates 체크에는 다음과 같은 것들이 있을 수 있습니다.
@@ -180,65 +73,60 @@ function RegisterForm({ onRegister }) {
      * 4. password & password_confirmation 과의 일치 확인
      */
 
-    if (password !== password_confirmation) {
-      alert('비밀번호가 일치하지 않습니다. 비밀번호를 확인해 주세요');
-      return;
-    }
-
     onRegister(form);
   };
 
   return (
-    <div className={styles.container}>
-      <form>
+    <div className="form-container">
+      <form onSubmit={onSubmit}>
         <h1>회원가입</h1>
-        <div className={styles.group}>
-          <label htmlFor="username" className={styles.label}>
+        <div className="form-group">
+          <label htmlFor="username" className="control-label">
             이름
           </label>
           <input
             type="text"
-            className={styles.control}
+            className="form-control"
             id="username"
             name="username"
             value={username}
             onChange={onChange}
           />
         </div>
-        <div className={styles.group}>
-          <label htmlFor="email" className={styles.label}>
+        <div className="form-group">
+          <label htmlFor="email" className="control-label">
             이메일
           </label>
-          <input type="email" className={styles.control} id="email" name="email" value={email} onChange={onChange} />
+          <input type="email" className="form-control" id="email" name="email" value={email} onChange={onChange} />
         </div>
-        <div className={styles.group}>
-          <label htmlFor="password" className={styles.label}>
+        <div className="form-group">
+          <label htmlFor="password" className="control-label">
             비밀번호
           </label>
           <input
             type="password"
-            className={styles.control}
+            className="form-control"
             id="passwrod"
             name="password"
             value={password}
             onChange={onChange}
           />
         </div>
-        <div className={styles.group}>
-          <label htmlFor="password_confirmation" className={styles.label}>
+        <div className="form-group">
+          <label htmlFor="password_confirmation" className="control-label">
             비밀번호 확인
           </label>
           <input
             type="password"
-            className={styles.control}
+            className="form-control"
             id="passwrod_confirmation"
             name="password_confirmation"
             value={password_confirmation}
             onChange={onChange}
           />
         </div>
-        <div className={styles.group}>
-          <button type="submit" className={styles.btn} onClick={onSubmit}>
+        <div className="form-group">
+          <button type="submit" className="btn btn-submit">
             회원가입
           </button>
         </div>
@@ -250,131 +138,50 @@ function RegisterForm({ onRegister }) {
 export default RegisterForm;
 ```
 
-```css
-.container {
-  margin: 0 auto;
-  width: 400px;
-  padding-top: 4rem;
-}
-
-h1 {
-  text-align: center;
-}
-
-input {
-  font-size: small;
-  padding: 12px 16px;
-  text-shadow: 0 1px 1px #fff;
-}
-
-.label {
-  display: inline-block;
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-
-.group {
-  margin-bottom: 1.4rem;
-}
-
-.control {
-  width: 100%;
-}
-
-.btn {
-  display: inline-block;
-  border-radius: 2px;
-  padding: 15px 24px;
-  transition: all 0.1s;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn:hover {
-  color: white;
-  background-color: #dd4b39;
-}
-```
-
-### emotion 컨테이너 생성
-
-`css in js` 를 적용해 보기 위해 `emotion` 라이브러리를 이용할 것입니다. 대체제로는 `styled-component` 를 이용할 수도 있습니다. 우선, `emotion` 패키지를 사용하기 위해 필요한 라이브러리스 설치합니다. 그리고, [emotion styled component](https://emotion.sh/docs/styled) 를 참고하여 `styled component` 를 제작해 봅니다.
-
-- [ ] `$ yarn add @emotion/core @emotion/styled`
+위의 코드에서 `onSubmit` 함수에서 사용자의 입력 항목에 대해 정상적인 입력 여부를 확인하고자, `yup` 을 적용한다면 우선 입력 폼에 대한 `schema` 부터 정의할 필요가 있습니다. 적당한 곳에 `schema` 정의를 위한 파일을 만들어 봅니다. 여기에서는 `src/validators/register-form-validator.js` 로 파일을 생성했습니다.
 
 ```javascript
-// index.js
+import * as yup from 'yup';
 
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
-import styled from '@emotion/styled';
-import { useState } from 'react';
+export const invalidUsername = 'username 은 최소 3자 이상 최대 32자 이하여야 합니다';
+export const invalidEmail = 'email 형식이 정상적이지 않습니다';
+export const invalidPassword = '비밀번호는 최소 4자 이상 32자 이하여야 합니다';
+export const invalidPasswordConfirmation = '비밀번호와 비밀번호 확인이 일치하지 않습니다';
 
-const RegisterForm = styled('form')`
-  margin: 0 auto;
-  width: ${props => props.width || '400px'};
-  padding-top: 4rem;
+export const RegisterFormValidator = yup.object().shape({
+  username: yup
+    .string()
+    .min(3, invalidUsername)
+    .max(32, invalidUsername)
+    .required(),
+  email: yup
+    .string()
+    .email(invalidEmail)
+    .required(),
+  password: yup
+    .string()
+    .min(4, invalidPassword)
+    .max(32, invalidPassword)
+    .required(),
+  password_confirmation: yup
+    .string()
+    .oneOf([yup.ref('password'), null], invalidPasswordConfirmation)
+    .required(),
+});
+```
 
-  h1 {
-    text-align: center;
-  }
+`yup` 의 구문이 너무나 간결하여 따로 설명을 할 필요가 없을 정도입니다. 자세한 구문 설정은 [yup 공식 페이지](https://github.com/jquense/yup) 에서 확인해 보세요.
 
-  input {
-    font-size: small;
-    padding: 12px 16px;
-    text-shadow: ${props => (props.shadow ? '0 1px 1px #fff' : 'none')};
-  }
+이제 `validate check` 를 위한 `schema` 를 만들었으니, `RegisterForm Component` 에서 `schema` 를 이용한 구문 점검을 해 보겠습니다. 아까 위에서 보았던 `onSubmit` 구문을 다음과 같이 변경합니다.
 
-  .control-label {
-    display: inline-block;
-    font-weight: ${props => props.weight || 'bold'};
-    margin-bottom: 6px;
-  }
+```javascript
+import { RegisterFormValidator } from '../validators/register-form-validator';
 
-  .form-group {
-    margin-bottom: ${props => props.mb || '1.4rem'};
-  }
+...
 
-  .form-control {
-    width: 100%;
-  }
-
-  .btn {
-    display: inline-block;
-    font-size: small;
-    border-radius: ${props => props.radius || '0px'};
-    padding: 15px 24px;
-    transition: all 0.1s;
-    text-decoration: none;
-    cursor: ${props => props.cursor || 'pointer'};
-
-    &:hover {
-      color: white;
-      background-color: #dd4b39;
-    }
-  }
-`;
-
-export default ({ onRegister }) => {
-  const [form, setForm] = useState({
-    username: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-  });
-
-  const { username, email, password, password_confirmation } = form;
-
-  const onChange = e => {
-    const next = {
-      ...form,
-      [e.target.name]: e.target.value,
-    };
-    setForm(next);
-  };
-
-  const onSubmit = e => {
+const onSubmit = e => {
     e.preventDefault();
+
     /**
      * 각종 validates 체크를 진행한 뒤 문제가 없다면 onRegister 이벤트를 호출합니다.
      * validates 체크에는 다음과 같은 것들이 있을 수 있습니다.
@@ -384,68 +191,14 @@ export default ({ onRegister }) => {
      * 4. password & password_confirmation 과의 일치 확인
      */
 
-    if (password !== password_confirmation) {
-      alert('비밀번호가 일치하지 않습니다. 비밀번호를 확인해 주세요');
-      return;
-    }
-
-    onRegister(form);
+    RegisterFormValidator.validate(form)
+      .then(form => {
+        onRegister(form);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
-
-  return (
-    <RegisterForm>
-      <h1>회원가입</h1>
-      <div className="form-group">
-        <label htmlFor="username" className="control-label">
-          이름
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="username"
-          name="username"
-          value={username}
-          onChange={onChange}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="email" className="control-label">
-          이메일
-        </label>
-        <input type="email" className="form-control" id="email" name="email" value={email} onChange={onChange} />
-      </div>
-      <div className="form-group">
-        <label htmlFor="password" className="control-label">
-          비밀번호
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="passwrod"
-          name="password"
-          value={password}
-          onChange={onChange}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="password_confirmation" className="control-label">
-          비밀번호 확인
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="passwrod_confirmation"
-          name="password_confirmation"
-          value={password_confirmation}
-          onChange={onChange}
-        />
-      </div>
-      <div className="form-group">
-        <button type="submit" className="btn btn-submit" onClick={onSubmit}>
-          회원가입
-        </button>
-      </div>
-    </RegisterForm>
-  );
-};
 ```
+
+위와 같이 `Promise` 형태의 구문으로 `form` 에 대한 `validate check` 를 진행할 수 있습니다. 예제보다 더 좋은 사용자 경험을 만들고 싶다면 `catch` 구문을 풍성하게 만들어 `UI / UX` 적인 부분을 더 강화할 수 있을 것입니다.
