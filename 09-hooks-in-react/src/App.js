@@ -18,6 +18,20 @@ const Profile = ({ profile }) => {
   );
 };
 
+/**
+ * React 16.8 버전부터 추가된 Hook 기능을 알아본다.
+ *
+ * 1. 기본 훅 (웬만하면 기본 훅만 사용해도 크게 무리는 없음)
+ *    - useState: component 내의 state 값을 처리하고자 할 때 사용
+ *    - useEffect: 화면이 시작될 때 / 업데이트 될 때 등에서 사용 (사용시 매우 주의해야 함)
+ *    - useContext: React.createContext 로 생성된 Global Context 의 내용을 연동할 경우 사용
+ *    - useRef: 특정 DOM Element 를 참조해야 할 경우 필요
+ * 2. 추가 훅 (추가 훅은 기본 Hook 의 변형이거나 특별한 경우에만 사용되는 경우임)
+ *    - useReducer: useState를 redux 방식으로 사용하기 위한 hook
+ *    - useCallback: useMemo 와 동일하게 렌더링 효율을 올리기 위해 사용되는 hook 임
+ *    - useMemo: 인자로 전달되는 값에 대한 변화가 감지될 때만 callback 수행이 될 수 있도록 하여 불필요한 랜더링 수행을 방지
+ */
+
 function App() {
   /**
    * useState 가 가지는 의미는 무엇일까?
