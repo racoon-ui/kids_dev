@@ -22,6 +22,7 @@ function App() {
      * 민감한 정보를 마스킹 하기 위한 조치
      * production 에서는 필요없는 코드일 수 있습니다.
      */
+
     const newForm = {
       ...form,
       password: '****',
