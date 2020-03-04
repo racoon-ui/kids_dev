@@ -2,7 +2,6 @@
 import { jsx } from '@emotion/core';
 import { useState } from 'react';
 import { Form, FormGroup } from '../../components/Form';
-import { center } from '../../components/Position';
 import Input from '../../components/Input';
 import Label from '../../components/Label';
 import Button from '../../components/Button';
