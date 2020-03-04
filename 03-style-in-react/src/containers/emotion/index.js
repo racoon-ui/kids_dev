@@ -1,52 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import styled from '@emotion/styled';
 import { useState } from 'react';
-
-const RegisterForm = styled('form')`
-  margin: 0 auto;
-  width: ${props => props.width || '400px'};
-  padding-top: 4rem;
-
-  h1 {
-    text-align: center;
-  }
-
-  input {
-    font-size: small;
-    padding: 12px 16px;
-    text-shadow: ${props => (props.shadow ? '0 1px 1px #fff' : 'none')};
-  }
-
-  .control-label {
-    display: inline-block;
-    font-weight: ${props => props.weight || 'bold'};
-    margin-bottom: 6px;
-  }
-
-  .form-group {
-    margin-bottom: ${props => props.mb || '1.4rem'};
-  }
-
-  .form-control {
-    width: 100%;
-  }
-
-  .btn {
-    display: inline-block;
-    font-size: small;
-    border-radius: ${props => props.radius || '0px'};
-    padding: 15px 24px;
-    transition: all 0.1s;
-    text-decoration: none;
-    cursor: ${props => props.cursor || 'pointer'};
-
-    &:hover {
-      color: white;
-      background-color: #dd4b39;
-    }
-  }
-`;
+import { Form, FormGroup } from '../../components/Form';
+import { center } from '../../components/Position';
+import Input from '../../components/Input';
+import Label from '../../components/Label';
+import Button from '../../components/Button';
+import { H1 } from '../../components/Typography';
 
 export default ({ onRegister }) => {
   const [form, setForm] = useState({
@@ -86,58 +46,35 @@ export default ({ onRegister }) => {
   };
 
   return (
-    <RegisterForm>
-      <h1>회원가입</h1>
-      <div className="form-group">
-        <label htmlFor="username" className="control-label">
-          이름
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="username"
-          name="username"
-          value={username}
-          onChange={onChange}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="email" className="control-label">
-          이메일
-        </label>
-        <input type="email" className="form-control" id="email" name="email" value={email} onChange={onChange} />
-      </div>
-      <div className="form-group">
-        <label htmlFor="password" className="control-label">
-          비밀번호
-        </label>
-        <input
+    <Form width="400px" center>
+      <H1 align="center">회원가입</H1>
+      <FormGroup>
+        <Label htmlFor="username">이름</Label>
+        <Input type="text" id="username" name="username" value={username} onChange={onChange} />
+      </FormGroup>
+      <FormGroup>
+        <Label htmlFor="email">이메일</Label>
+        <Input type="email" id="email" name="email" value={email} onChange={onChange} />
+      </FormGroup>
+      <FormGroup>
+        <Label htmlFor="password">비밀번호</Label>
+        <Input type="password" id="passwrod" name="password" value={password} onChange={onChange} />
+      </FormGroup>
+      <FormGroup>
+        <Label htmlFor="password_confirmation">비밀번호 확인</Label>
+        <Input
           type="password"
-          className="form-control"
-          id="passwrod"
-          name="password"
-          value={password}
-          onChange={onChange}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="password_confirmation" className="control-label">
-          비밀번호 확인
-        </label>
-        <input
-          type="password"
-          className="form-control"
           id="passwrod_confirmation"
           name="password_confirmation"
           value={password_confirmation}
           onChange={onChange}
         />
-      </div>
-      <div className="form-group">
-        <button type="submit" className="btn btn-submit" onClick={onSubmit}>
+      </FormGroup>
+      <FormGroup>
+        <Button primary type="submit" onClick={onSubmit}>
           회원가입
-        </button>
-      </div>
-    </RegisterForm>
+        </Button>
+      </FormGroup>
+    </Form>
   );
 };
