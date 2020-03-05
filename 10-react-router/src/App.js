@@ -1,8 +1,10 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { NotFound, InternalServerError } from './components/Errors';
-import Landing from './containers/Landing';
-import Event from './containers/Event';
+import { NotFound } from './components/Errors';
+
+const Landing = lazy(() => import('./containers/Landing'));
+const Event = lazy(() => import('./containers/Event'));
+const Login = lazy(() => import('./containers/Login'));
 
 function App() {
   return (
@@ -10,8 +12,9 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route exact path="/" component={Landing} />
-          <Route exact path="/events/:id" component={Event} />
-          <Route exact path="/login" component={Landing} />
+          <Route exact path="/events/:slug" component={Event} />
+          <Route exact path="/login" component={Login} />
+          <Route component={NotFound} />
         </Switch>
       </Suspense>
     </BrowserRouter>
