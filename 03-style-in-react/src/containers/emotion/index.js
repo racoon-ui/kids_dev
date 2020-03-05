@@ -5,7 +5,7 @@ import { Form, FormGroup } from '../../components/Form';
 import Input from '../../components/Input';
 import Label from '../../components/Label';
 import Button from '../../components/Button';
-import { H1 } from '../../components/Typography';
+import { H1, Mute } from '../../components/Typography';
 
 export default ({ onRegister }) => {
   const [form, setForm] = useState({
@@ -45,7 +45,7 @@ export default ({ onRegister }) => {
   };
 
   return (
-    <Form width="400px" center>
+    <Form width="418px" center>
       <H1 align="center">회원가입</H1>
       <FormGroup>
         <Label htmlFor="username">이름</Label>
@@ -68,6 +68,9 @@ export default ({ onRegister }) => {
           value={password_confirmation}
           onChange={onChange}
         />
+        <Mute color="#ff0000" size="1rem">
+          이것은 회색 처리된 글자입니다.
+        </Mute>
       </FormGroup>
       <FormGroup>
         <Button primary type="submit" onClick={onSubmit}>

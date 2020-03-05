@@ -77,6 +77,7 @@ const Mute = props => (
       color: ${props.color || '#333'};
       font-weight: ${props.wegith || '100'};
       text-align: ${props.align || 'left'};
+      font-size: ${props.size || '0.75rem'};
     `}
     {...props}
   >
