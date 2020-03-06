@@ -132,3 +132,5 @@ const Loading = props => (
 
 export default Loading;
 ```
+
+이제 React Router 를 알았으니 페이지 간 전환을 통해 본인이 원하는 화면들을 만들어보세요.
