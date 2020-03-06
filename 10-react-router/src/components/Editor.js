@@ -16,48 +16,47 @@ class Clipboard extends QuillClipboard {
     return el.getElementsByTagName('meta');
   };
 
-  async onPaste(e) {
-    let clipboardData = e.clipboardData || window.clipboardData;
-    let pastedData = await clipboardData.getData('Text');
+  /**
+   * Open Graph 를 이용한 정보를 가져오고 싶다면 아래의 코드를 활성화 하면 됩니다.
+   * 하지만, 일부 사이트에서는 CORS 를 막은 사이트가 있다면 문제가 있을 수 있습니다.
+   */
+  // async onPaste(e) {
+  //   let clipboardData = e.clipboardData || window.clipboardData;
+  //   let pastedData = await clipboardData.getData('Text');
 
-    const urlMatches = pastedData.match(/\b(http|https)?:\/\/\S+/gi) || [];
-    if (urlMatches.length > 0) {
-      e.preventDefault();
-      urlMatches.forEach(link => {
-        axios
-          .get(link)
-          .then(payload => {
-            // let title, image, url, description;
-            let title, image, url;
-            for (let node of this.getMetaTagElements(payload)) {
-              if (node.getAttribute('property') === 'og:title') {
-                title = node.getAttribute('content');
-              }
-              if (node.getAttribute('property') === 'og:image') {
-                image = node.getAttribute('content');
-              }
-              if (node.getAttribute('property') === 'og:url') {
-                url = node.getAttribute('content');
-              }
-              // if (node.getAttribute("property") === "og:description") {
-              //     description = node.getAttribute("content");
-              // }
-            }
+  //   const urlMatches = pastedData.match(/\b(http|https)?:\/\/\S+/gi) || [];
+  //   if (urlMatches.length > 0) {
+  //     e.preventDefault();
+  //     urlMatches.forEach(async link => {
+  //       try {
+  //         const payload = await axios(link);
+  //         let title, image, url;
+  //         for (let node of this.getMetaTagElements(payload.data)) {
+  //           if (node.getAttribute('property') === 'og:title') {
+  //             title = node.getAttribute('content');
+  //           }
+  //           if (node.getAttribute('property') === 'og:image') {
+  //             image = node.getAttribute('content');
+  //           }
+  //           if (node.getAttribute('property') === 'og:url') {
+  //             url = node.getAttribute('content');
+  //           }
+  //         }
 
-            const rendered = `<a href=${url} target="_blank"><div><img src=${image} alt=${title} width="20%"/><span>${title}</span></div></a>`;
+  //         const rendered = `<a href=${url} target="_blank"><div><img src=${image} alt=${title} width="20%"/><span>${title}</span></div></a>`;
 
-            let range = this.quill.getSelection();
-            let position = range ? range.index : 0;
-            this.quill.pasteHTML(position, rendered, 'silent');
-            this.quill.setSelection(position + rendered.length);
-          })
-          .catch(error => console.error(error));
-      });
-    } else {
-      //console.log('when to use this') 보통 다른 곳에서  paste 한다음에  copy하면 이쪽 걸로 한다.
-      super.onPaste(e);
-    }
-  }
+  //         let range = this.quill.getSelection();
+  //         let position = range ? range.index : 0;
+  //         this.quill.pasteHTML(position, rendered, 'silent');
+  //         this.quill.setSelection(position + rendered.length);
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     });
+  //   } else {
+  //     super.onPaste(e);
+  //   }
+  // }
 }
 Quill.register('modules/clipboard', Clipboard, true);
 
@@ -210,7 +209,7 @@ class QuillEditor extends React.Component {
   }
 
   handleChange = html => {
-    console.log('html', html);
+    // console.log('html', html);
     // https://youtu.be/BbR-QCoKngE
     // https://www.youtube.com/embed/ZwKhufmMxko
     // https://tv.naver.com/v/9176888
@@ -429,7 +428,6 @@ class QuillEditor extends React.Component {
     syntax: true,
     toolbar: {
       container: '#toolbar',
-      //id ="toorbar"는  그 위에 B I U S I V F P 이거 있는 곳이다.
       handlers: {
         insertImage: this.imageHandler,
         insertVideo: this.videoHandler,
