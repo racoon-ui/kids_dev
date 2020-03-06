@@ -39,8 +39,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>{this.state.count}</h1>
-        <button onClick={this.onIncrease()}>+1 increase</button>
-        <button onClick={this.onDecrease()}>-1 decrease</button>
+        <button onClick={() => this.onIncrease()}>+1 increase</button>
+        <button onClick={() => this.onDecrease()}>-1 decrease</button>
         <button onClick={() => this.onIncreaseBy(5)}>+5 increase</button>
       </div>
     );
