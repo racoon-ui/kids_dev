@@ -5,8 +5,6 @@ import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 const __ISMSIE__ = navigator.userAgent.match(/Trident/i) ? true : false;
 
-// Quill.register('modules/clipboard', PlainClipboard, true);
-
 const QuillClipboard = Quill.import('modules/clipboard');
 
 class Clipboard extends QuillClipboard {
