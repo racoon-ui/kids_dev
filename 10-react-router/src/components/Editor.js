@@ -1,4 +1,6 @@
+/** @jsx jsx  */
 import React from 'react';
+import { jsx, css } from '@emotion/core';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -18,43 +20,43 @@ class Clipboard extends QuillClipboard {
    * Open Graph 를 이용한 정보를 가져오고 싶다면 아래의 코드를 활성화 하면 됩니다.
    * 하지만, 일부 사이트에서는 CORS 를 막은 사이트가 있다면 문제가 있을 수 있습니다.
    */
-  // async onPaste(e) {
-  //   let clipboardData = e.clipboardData || window.clipboardData;
-  //   let pastedData = await clipboardData.getData('Text');
+  async onPaste(e) {
+    let clipboardData = e.clipboardData || window.clipboardData;
+    let pastedData = await clipboardData.getData('Text');
 
-  //   const urlMatches = pastedData.match(/\b(http|https)?:\/\/\S+/gi) || [];
-  //   if (urlMatches.length > 0) {
-  //     e.preventDefault();
-  //     urlMatches.forEach(async link => {
-  //       try {
-  //         const payload = await axios(link);
-  //         let title, image, url;
-  //         for (let node of this.getMetaTagElements(payload.data)) {
-  //           if (node.getAttribute('property') === 'og:title') {
-  //             title = node.getAttribute('content');
-  //           }
-  //           if (node.getAttribute('property') === 'og:image') {
-  //             image = node.getAttribute('content');
-  //           }
-  //           if (node.getAttribute('property') === 'og:url') {
-  //             url = node.getAttribute('content');
-  //           }
-  //         }
+    const urlMatches = pastedData.match(/\b(http|https)?:\/\/\S+/gi) || [];
+    if (urlMatches.length > 0) {
+      e.preventDefault();
+      urlMatches.forEach(async link => {
+        try {
+          const payload = await axios(link);
+          let title, image, url;
+          for (let node of this.getMetaTagElements(payload.data)) {
+            if (node.getAttribute('property') === 'og:title') {
+              title = node.getAttribute('content');
+            }
+            if (node.getAttribute('property') === 'og:image') {
+              image = node.getAttribute('content');
+            }
+            if (node.getAttribute('property') === 'og:url') {
+              url = node.getAttribute('content');
+            }
+          }
 
-  //         const rendered = `<a href=${url} target="_blank"><div><img src=${image} alt=${title} width="20%"/><span>${title}</span></div></a>`;
+          const rendered = `<a href=${url} target="_blank"><div><img src=${image} alt=${title} width="20%"/><span>${title}</span></div></a>`;
 
-  //         let range = this.quill.getSelection();
-  //         let position = range ? range.index : 0;
-  //         this.quill.pasteHTML(position, rendered, 'silent');
-  //         this.quill.setSelection(position + rendered.length);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     });
-  //   } else {
-  //     super.onPaste(e);
-  //   }
-  // }
+          let range = this.quill.getSelection();
+          let position = range ? range.index : 0;
+          this.quill.pasteHTML(position, rendered, 'silent');
+          this.quill.setSelection(position + rendered.length);
+        } catch (err) {
+          console.log(err);
+        }
+      });
+    } else {
+      super.onPaste(e);
+    }
+  }
 }
 Quill.register('modules/clipboard', Clipboard, true);
 
@@ -286,6 +288,8 @@ class QuillEditor extends React.Component {
     e.stopPropagation();
     e.preventDefault();
 
+    console.log('insertVideo');
+
     if (e.currentTarget && e.currentTarget.files && e.currentTarget.files.length > 0) {
       const file = e.currentTarget.files[0];
 
@@ -367,7 +371,15 @@ class QuillEditor extends React.Component {
   render() {
     return (
       <div>
-        <div id="toolbar">
+        <div
+          id="toolbar"
+          css={css`
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: white;
+          `}
+        >
           <select className="ql-header" defaultValue={''} onChange={e => e.persist()}>
             <option value="1" />
             <option value="2" />
