@@ -13,7 +13,6 @@ function Event() {
 
   const onEditorChange = value => {
     setContent(value);
-    console.log(content);
   };
 
   const onFilesChange = files => {
