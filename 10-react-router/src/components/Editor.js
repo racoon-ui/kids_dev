@@ -376,7 +376,7 @@ class QuillEditor extends React.Component {
           css={css`
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 1;
             background: white;
           `}
         >
