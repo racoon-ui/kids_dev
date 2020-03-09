@@ -28,9 +28,15 @@ function RegisterForm({ onRegister }) {
           className={`form-control ${errors.username && 'error'}`}
           id="username"
           name="username"
-          ref={register({ required: true, maxLength: 80 })}
+          ref={register({
+            required: '사용자명은 반드시 포함되어야 합니다.',
+            maxLength: {
+              value: 32,
+              message: '사용자명은 최대 32자 이하여야 합니다',
+            },
+          })}
         />
-        {errors.username && <Error message="이름은 최대 80자 이하로 반드시 입력해야 합니다" />}
+        {errors.username && <Error message={errors.username.message} />}
       </div>
       <div className="form-group">
         <label htmlFor="email" className="control-label">
