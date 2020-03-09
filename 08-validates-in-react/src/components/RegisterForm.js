@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { RegisterFormValidator } from '../validators/register-form-validator';
+import { LoginFormValidator } from '../validators/login-form-validator';
 
 function RegisterForm({ onRegister }) {
   const [form, setForm] = useState({
@@ -33,13 +34,14 @@ function RegisterForm({ onRegister }) {
      * 5. 동기 / 비동기 호출의 차이 확인
      */
 
-    // try {
-    //   const data = await RegisterFormValidator.validate(form);
-    //   onRegister(data);
-    // } catch (e) {
-    //   console.log(e);
-    // }
-    //
+    // LoginFormValidator.validate(form)
+    //   .then(form => {
+    //     onLogin(form)
+    //   })
+    //   .catch(err => {
+    //     console.log(error)
+    //   })
+
     RegisterFormValidator.validate(form)
       .then(form => {
         onRegister(form);

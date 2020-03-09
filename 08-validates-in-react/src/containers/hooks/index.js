@@ -3,62 +3,9 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 
-const RegisterForm = styled('form')`
-  margin: 0 auto;
-  width: ${props => props.width || '400px'};
-  padding-top: 4rem;
+import '../css/style.css';
 
-  h1 {
-    text-align: center;
-  }
-
-  input {
-    font-size: small;
-    padding: 12px 16px;
-    text-shadow: ${props => (props.shadow ? '0 1px 1px #fff' : 'none')};
-  }
-
-  .control-label {
-    display: inline-block;
-    font-weight: ${props => props.weight || 'bold'};
-    margin-bottom: 6px;
-  }
-
-  .form-group {
-    margin-bottom: ${props => props.mb || '1.4rem'};
-  }
-
-  .form-control {
-    width: 100%;
-    &.error {
-      border: 2px solid #dd4b39;
-    }
-  }
-
-  .error-container {
-    margin-top: 0.75rem;
-    font-weight: 600;
-    font-size: 0.75rem;
-    color: #ed4b39;
-  }
-
-  .btn {
-    display: inline-block;
-    font-size: small;
-    border-radius: ${props => props.radius || '0px'};
-    padding: 15px 24px;
-    transition: all 0.1s;
-    text-decoration: none;
-    cursor: ${props => props.cursor || 'pointer'};
-
-    &:hover {
-      color: white;
-      background-color: #dd4b39;
-    }
-  }
-`;
-
-export default ({ onRegister }) => {
+function RegisterForm({ onRegister }) {
   const { register, errors, watch, handleSubmit } = useForm({
     mode: 'onBlur',
   });
@@ -70,7 +17,7 @@ export default ({ onRegister }) => {
   const Error = ({ message }) => <div className="error-container">{message}</div>;
 
   return (
-    <RegisterForm onSubmit={handleSubmit(onSubmit)}>
+    <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
       <h1>회원가입</h1>
       <div className="form-group">
         <label htmlFor="username" className="control-label">
@@ -83,7 +30,7 @@ export default ({ onRegister }) => {
           name="username"
           ref={register({ required: true, maxLength: 80 })}
         />
-        {errors.username && <Error message="이름은 필수로 입력해야 합니다" />}
+        {errors.username && <Error message="이름은 최대 80자 이하로 반드시 입력해야 합니다" />}
       </div>
       <div className="form-group">
         <label htmlFor="email" className="control-label">
@@ -99,7 +46,7 @@ export default ({ onRegister }) => {
             pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
           })}
         />
-        {errors.email && <Error message="이름은 형식에 맞게 반드시 기입해야 하는 항목입니다" />}
+        {errors.email && <Error message="이메일은 양식에 맞게 반드시 포함하세요 " />}
       </div>
       <div className="form-group">
         <label htmlFor="password" className="control-label">
@@ -112,7 +59,6 @@ export default ({ onRegister }) => {
           name="password"
           ref={register({ required: true, minLength: 3, maxLength: 12 })}
         />
-        {errors.password && <Error message="비밀번호는 3자 이상 12자 이하로 반드시 입력해야 합니다" />}
       </div>
       <div className="form-group">
         <label htmlFor="password_confirmation" className="control-label">
@@ -137,6 +83,8 @@ export default ({ onRegister }) => {
           회원가입
         </button>
       </div>
-    </RegisterForm>
+    </form>
   );
-};
+}
+
+export default RegisterForm;
