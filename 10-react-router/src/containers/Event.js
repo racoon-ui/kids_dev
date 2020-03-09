@@ -24,6 +24,9 @@ function Event() {
 
     setContent('');
 
+    /**
+     * 백엔드 서버로 데이터 전송 필요
+     */
     // if (user.userData && !user.userData.isAuth) {
     //   return alert('Please Log in first');
     // }
