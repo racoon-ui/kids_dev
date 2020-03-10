@@ -3,7 +3,7 @@ import React from 'react';
 // import RegisterForm from './containers/scss';
 // import RegisterForm from './containers/module';
 // import RegisterForm from './containers/emotion';
-import RegisterForm from './containers/hooks';
+import FormNaver from './containers/hooks/Form_naver';
 
 function App() {
   const registerHandler = form => {
@@ -32,7 +32,7 @@ function App() {
     console.log(newForm);
   };
 
-  return <RegisterForm onRegister={registerHandler} />;
+  return <FormNaver onRegister={registerHandler} />;
 }
 
 export default App;
