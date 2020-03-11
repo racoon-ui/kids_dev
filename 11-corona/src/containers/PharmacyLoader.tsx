@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stack } from '@chakra-ui/core';
 import { RootState } from '../modules';
@@ -11,6 +11,10 @@ import ColorMode from '../components/ColorMode';
 function PharmacyLoader() {
   const { data, loading, error } = useSelector((state: RootState) => state.pharmacy);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPharmacyProfileThunk('서울특별시 강남구'));
+  }, [dispatch]);
 
   const onSearch = (address: string) => {
     dispatch(getPharmacyProfileThunk(address));
