@@ -1662,6 +1662,13 @@
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
 
+"@types/react-table@^7.0.10":
+  version "7.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.0.10.tgz#8742cd76dfaf9857580698ca4d3a852b32377d0b"
+  integrity sha512-kpUiIlGUpHn4D/0xcLqHEQ0M8Tbg6pbgZqXBDejfn1oBK2cjnOaZKLlqPrh5poIRp8JMJrOv2UWDCRiXARUGBA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.8.10", "@types/react@^16.9.0":
   version "16.9.23"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.23.tgz#1a66c6d468ba11a8943ad958a8cb3e737568271c"
@@ -8864,6 +8871,11 @@ react-spring@^8.0.27:
   dependencies:
     "@babel/runtime" "^7.3.1"
     prop-types "^15.5.8"
+
+react-table@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.0.0.tgz#3297e454cbffe916626b184f5394d7e7e098fa36"
+  integrity sha512-/RKUYLuqrupUs0qHdjdQLmgwdQ9mgXPnpshqv2T+OQUGhTu0XuLXVc6GOIywemXNf6qjL3dj81O6zALLK74Emw==
 
 react@^16.13.0:
   version "16.13.0"
