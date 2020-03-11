@@ -17,59 +17,70 @@ function FormNaver({ onRegister }) {
   const Error = ({ message }) => <div className="error-container">{message}</div>;
 
   return (
-    <div className="join_membership-wrap">
-      <div className="join_membership_logo">
-        <h1>
-          <a href="http://www.naver.com" class="h_logo">
-            <span class="blind">NAVER</span>
-          </a>
-        </h1>
-      </div>
+    <div className="membership">
+      <h1 className="logo">
+        <a href="http://www.naver.com">
+          <span className="blind">NAVER</span>
+        </a>
+      </h1>
 
       <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
         <div className="row_group">
           <div className="join_row">
-            <label htmlFor="userid" className="control-label">
-              아이디
-            </label>
-            <input
-              type="text"
-              className={`form-control ${errors.userid && 'error'}`}
-              id="userid"
-              name="userid"
-              ref={register({ required: true, minLength: 3, maxLength: 12 })}
-            />
+            <h3 className="join_title">
+              <label htmlFor="userid" className="control-label">
+                아이디
+              </label>
+            </h3>
+            <span className="input_box">
+              <input
+                type="text"
+                className={`form-control ${errors.userid && 'error'}`}
+                id="userid"
+                name="userid"
+                ref={register({ required: true, minLength: 3, maxLength: 12 })}
+              />
+            </span>
+            <span>필수 정보입니다.</span>
           </div>
 
           <div className="join_row">
-            <label htmlFor="password" className="control-label">
-              비밀번호
-            </label>
-            <input
-              type="password"
-              className={`form-control ${errors.password && 'error'}`}
-              id="passwrod"
-              name="password"
-              ref={register({ required: true, minLength: 3, maxLength: 12 })}
-            />
+            <h3 className="join_title">
+              <label htmlFor="password" className="control-label">
+                비밀번호
+              </label>
+            </h3>
+            <span className="input_box">
+              <input
+                type="password"
+                className={`form-control ${errors.password && 'error'}`}
+                id="passwrod"
+                name="password"
+                ref={register({ required: true, minLength: 3, maxLength: 12 })}
+              />
+            </span>
           </div>
 
           <div className="join_row">
-            <label htmlFor="password_confirmation" className="control-label">
-              비밀번호 확인
-            </label>
-            <input
-              type="password"
-              className={`form-control ${errors.password_confirmation && 'error'}`}
-              id="passwrod_confirmation"
-              name="password_confirmation"
-              ref={register({
-                required: true,
-                validate: value => {
-                  return value === watch('password');
-                },
-              })}
-            />
+            <h3 className="join_title">
+              <label htmlFor="password_confirmation" className="control-label">
+                비밀번호 확인
+              </label>
+            </h3>
+            <span className="input_box">
+              <input
+                type="password"
+                className={`form-control ${errors.password_confirmation && 'error'}`}
+                id="passwrod_confirmation"
+                name="password_confirmation"
+                ref={register({
+                  required: true,
+                  validate: value => {
+                    return value === watch('password');
+                  },
+                })}
+              />
+            </span>
             {errors.password_confirmation && <Error message="비밀번호와 비밀번호 확인이 일치하지 않습니다" />}
           </div>
         </div>
