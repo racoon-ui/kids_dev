@@ -8,6 +8,7 @@ import SearchBox from '../components/SearchBox';
 // import Store from '../components/Store';
 import ColorMode from '../components/ColorMode';
 import SimpleTable from '../components/SimpleTable';
+import Loading from '../components/Loading';
 
 function PharmacyLoader() {
   const { data, loading, error } = useSelector((state: RootState) => state.pharmacy);
@@ -71,7 +72,11 @@ function PharmacyLoader() {
         <ColorMode />
         <SearchBox onSearch={onSearch} />
       </Stack>
-      {loading && <p style={{ textAlign: 'center' }}>로딩중...</p>}
+      {loading && (
+        <p style={{ textAlign: 'center' }}>
+          <Loading />
+        </p>
+      )}
       {error && <p style={{ textAlign: 'center' }}>에러발생...</p>}
       {data && <SimpleTable columns={columns} data={data.stores} />}
       {/* {data && data.stores.map((store, index) => <Store {...store} key={index} />)} */}
