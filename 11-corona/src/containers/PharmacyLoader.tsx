@@ -72,11 +72,7 @@ function PharmacyLoader() {
         <ColorMode />
         <SearchBox onSearch={onSearch} />
       </Stack>
-      {loading && (
-        <p style={{ textAlign: 'center' }}>
-          <Loading />
-        </p>
-      )}
+      {loading && <Loading />}
       {error && <p style={{ textAlign: 'center' }}>에러발생...</p>}
       {data && <SimpleTable columns={columns} data={data.stores} />}
       {/* {data && data.stores.map((store, index) => <Store {...store} key={index} />)} */}
