@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { PulseLoader } from 'react-spinners';
+import { RingLoader } from 'react-spinners';
 
 const Loading = () => (
   <div
@@ -11,7 +11,7 @@ const Loading = () => (
       height: 100vh;
     `}
   >
-    <PulseLoader size={20} color={'#36D7B7'} />
+    <RingLoader size={60} color={'#36D7B7'} />
   </div>
 );
 

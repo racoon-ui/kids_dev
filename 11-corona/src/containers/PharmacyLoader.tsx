@@ -76,7 +76,7 @@ function PharmacyLoader() {
       {data && (
         <Stack>
           <Heading as="h1" padding={2} size="sm" color="red.400">
-            {`${data.address}: ${data.count} 건의 데이터가 검색되었습니다`}
+            {`${data.address}: ${data.count} 건의 데이터가 검색되었습니다.`}
           </Heading>
           <SimpleTable columns={columns} data={data.stores} />
         </Stack>

@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  InputGroup,
-  InputLeftElement,
-  Icon,
-  Input,
-  Text,
-  Box,
-} from '@chakra-ui/core';
+import { InputGroup, InputLeftElement, Icon, Input, Text, Box } from '@chakra-ui/core';
 
 type SearchFormData = {
   search: string;
@@ -28,9 +21,7 @@ export default function SearchBox({ onSearch }: SearchProps) {
     <Box w="100%" p={2} overflow="hidden">
       <form onSubmit={onSubmit}>
         <InputGroup>
-          <InputLeftElement
-            children={<Icon name="search" color="gray.300" />}
-          />
+          <InputLeftElement children={<Icon name="search" color="gray.300" />} />
           <Input
             type="text"
             name="search"
