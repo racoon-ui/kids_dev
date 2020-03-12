@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stack, Heading } from '@chakra-ui/core';
+import store from 'store';
 import { RootState } from '../modules';
 import { getPharmacyProfileThunk } from '../modules/pharmacy';
 
@@ -8,8 +9,10 @@ import SearchBox from '../components/SearchBox';
 import ColorMode from '../components/ColorMode';
 import SimpleTable from '../components/SimpleTable';
 import Loading from '../components/Loading';
+import Agreement from '../components/Agreement';
 
 function PharmacyLoader() {
+  const [agree, setAgree] = useState<boolean>(false);
   const { data, loading, error } = useSelector((state: RootState) => state.pharmacy);
   const dispatch = useDispatch();
 
@@ -54,12 +57,29 @@ function PharmacyLoader() {
   );
 
   useEffect(() => {
-    dispatch(getPharmacyProfileThunk('서울특별시 강남구'));
-  }, [dispatch]);
+    setAgree(store.get('corona19_agree'));
+    if (agree) {
+      dispatch(getPharmacyProfileThunk('서울특별시 강남구'));
+    }
+  }, [agree, dispatch]);
 
   const onSearch = (address: string) => {
     dispatch(getPharmacyProfileThunk(address));
   };
+
+  const onAgreement = (e: React.MouseEvent<HTMLButtonElement>) => {
+    store.set('corona19_agree', true);
+    setAgree(true);
+  };
+
+  if (!agree) {
+    return (
+      <Box w="100%" p={4} overflow="hidden">
+        <ColorMode />
+        <Agreement onClick={onAgreement} />
+      </Box>
+    );
+  }
 
   return (
     <Box w="100%" p={4} overflow="hidden">
