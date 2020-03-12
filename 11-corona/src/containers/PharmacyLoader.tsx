@@ -53,10 +53,6 @@ function PharmacyLoader() {
     [],
   );
 
-  /**
-   * 최초에 특정 지역을 검색하고 싶다면 아래의 구문을 활성화하면 됩니다.
-   * @param address
-   */
   useEffect(() => {
     dispatch(getPharmacyProfileThunk('서울특별시 강남구'));
   }, [dispatch]);
