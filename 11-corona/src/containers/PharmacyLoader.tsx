@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Stack } from '@chakra-ui/core';
+import { Box, Stack, Heading } from '@chakra-ui/core';
 import { RootState } from '../modules';
 import { getPharmacyProfileThunk } from '../modules/pharmacy';
 
@@ -58,9 +58,9 @@ function PharmacyLoader() {
    * 최초에 특정 지역을 검색하고 싶다면 아래의 구문을 활성화하면 됩니다.
    * @param address
    */
-  // useEffect(() => {
-  //   dispatch(getPharmacyProfileThunk('서울특별시 강남구'));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getPharmacyProfileThunk('서울특별시 강남구'));
+  }, [dispatch]);
 
   const onSearch = (address: string) => {
     dispatch(getPharmacyProfileThunk(address));
@@ -74,7 +74,14 @@ function PharmacyLoader() {
       </Stack>
       {loading && <Loading />}
       {error && <p style={{ textAlign: 'center' }}>에러발생...</p>}
-      {data && <SimpleTable columns={columns} data={data.stores} />}
+      {data && (
+        <Stack>
+          <Heading as="h1" padding={2} size="sm" color="red.400">
+            {`${data.address}: ${data.count} 건의 데이터가 검색되었습니다`}
+          </Heading>
+          <SimpleTable columns={columns} data={data.stores} />
+        </Stack>
+      )}
       {/* {data && data.stores.map((store, index) => <Store {...store} key={index} />)} */}
     </Box>
   );
