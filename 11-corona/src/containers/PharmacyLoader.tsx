@@ -5,7 +5,6 @@ import { RootState } from '../modules';
 import { getPharmacyProfileThunk } from '../modules/pharmacy';
 
 import SearchBox from '../components/SearchBox';
-// import Store from '../components/Store';
 import ColorMode from '../components/ColorMode';
 import SimpleTable from '../components/SimpleTable';
 import Loading from '../components/Loading';
@@ -82,7 +81,6 @@ function PharmacyLoader() {
           <SimpleTable columns={columns} data={data.stores} />
         </Stack>
       )}
-      {/* {data && data.stores.map((store, index) => <Store {...store} key={index} />)} */}
     </Box>
   );
 }
