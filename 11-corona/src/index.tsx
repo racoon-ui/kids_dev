@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core';
 import Thunk from 'redux-thunk';
 import App from './App';
 import rootReducer from './modules';
 
-const store = createStore(rootReducer, applyMiddleware(Thunk));
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(Thunk)));
 
 ReactDOM.render(
   <Provider store={store}>
