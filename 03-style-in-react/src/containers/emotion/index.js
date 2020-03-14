@@ -45,7 +45,7 @@ export default ({ onRegister }) => {
   };
 
   return (
-    <Form width="418px" center>
+    <Form width="418px" center="true">
       <H1 align="center">회원가입</H1>
       <FormGroup>
         <Label htmlFor="username">이름</Label>
@@ -73,7 +73,7 @@ export default ({ onRegister }) => {
         </Mute>
       </FormGroup>
       <FormGroup>
-        <Button primary type="submit" onClick={onSubmit}>
+        <Button type="submit" onClick={onSubmit}>
           회원가입
         </Button>
       </FormGroup>
