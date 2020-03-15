@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { HelmetProvider } from 'react-helmet-async';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core';
 import Thunk from 'redux-thunk';
@@ -21,7 +22,9 @@ ReactDOM.render(
     <ThemeProvider>
       <ColorModeProvider>
         <CSSReset />
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </ColorModeProvider>
     </ThemeProvider>
   </Provider>,
