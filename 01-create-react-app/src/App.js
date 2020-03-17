@@ -39,6 +39,17 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>{this.state.count}</h1>
+        <button
+          class="snipcart-add-item"
+          data-item-id="starry-night"
+          data-item-price="79.99"
+          data-item-url="http://www.mariomall.co.kr/Detail?PCODE=P000845636&PID=1502&SearchKeyword=%EC%9B%90%ED%94%BC%EC%8A%A4"
+          data-item-description="플라워 패턴 티어드 맥시 원피스 T19MAXSkd"
+          data-item-image="http://cdn.mariooutlet.com/Product/A0133/A7F/P000845636_d1.jpg?AR=0&RS=520X660"
+          data-item-name="써스데이 아일랜드"
+        >
+          Add to cart
+        </button>
         <button onClick={() => this.onIncrease()}>+1 increase</button>
         <button onClick={() => this.onDecrease()}>-1 decrease</button>
         <button onClick={() => this.onIncreaseBy(5)}>+5 increase</button>
