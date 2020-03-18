@@ -29,7 +29,7 @@ const Image = styled.img`
   }
 `;
 
-export const LazyImage = ({ src, alt }) => {
+const LazyImage = ({ src, alt }) => {
   const [imageSrc, setImageSrc] = useState(placeHolder);
   const [imageRef, setImageRef] = useState();
 
@@ -90,3 +90,5 @@ export const LazyImage = ({ src, alt }) => {
     />
   );
 };
+
+export default LazyImage;

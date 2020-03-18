@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import _ from 'lodash';
-import { LazyImage } from './components/LazyImage';
+import LazyImage from './components/LazyImage';
 
 const Grid = styled.section`
   display: grid;
